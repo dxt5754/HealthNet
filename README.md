@@ -75,14 +75,14 @@ Populate Database:
 
 Windows: run
 
-        >       rebuilddatabase.bat
+	>       rebuilddatabase.bat
 from windows command line
 
 
 
 macOS/Linux: run
 
-        >       bash rebuilddatabase.command
+	>       bash rebuilddatabase.command
 
 On masOS/Linux only: use the flag ‘-r’ to immediately start the server after the database is reset: 
 
