@@ -1,0 +1,59 @@
+{% extends "core/landing/baselanding.html" %}
+
+{% load userGroup %}
+
+{% block pageContents %}
+
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr><h2>Patients</h2></tr>
+        </thead>
+        <thead>
+            <tr>
+                {% for l in Labels %}
+                    <th>{{ l }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        {% for p in Patients %}
+            <tr>
+                <td>{{ p.user.get_full_name }}</td>
+                <td>{{ p.user.email }}</td>
+                <td>{{ p.birthday }}</td>
+                <td>{{ p.hospital }}</td>
+                <td>{{ p.admitted}}</td>
+                {% if request.user|in_group:"Doctor" or request.user|in_group:"Nurse"%}
+                    <td>
+                        <a href="{% url 'view medical info for' p.id %}" class='btn btn-primary'>View Medical Info</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'list prescriptions for patient' p.id %}"
+                           class='btn btn-primary'>View Prescriptions</a>
+                    </td>
+                {% elif request.user|in_group:"Doctor" %}
+                    <td>
+                        <a href="{% url 'view test results for patient' %}"
+                           class='btn btn-primary'>View Test Results</a>
+                    </td>
+                {% endif %}
+
+                {% if p.admitted and request.user|in_group:"Doctor"%}
+                    <td>
+                    <a href="{% url 'admit patients' p.id %}" class='btn btn-primary'>Dismiss Patient</a>
+                </td>
+                {% elif not p.admitted and not request.user|in_group:"Admin" %}
+                    <td>
+                    <a href="{% url 'admit patients' p.id %}" class='btn btn-primary'>Admit Patient</a>
+                </td>
+                {% endif %}
+
+                {% if request.user|in_group:"Admin"%}
+                    <td>
+                        <a href="{% url 'transfer_landing' %}" class='btn btn-primary'>Transfer Patient</a>
+                    </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+    </table>
+
+{% endblock pageContents %}

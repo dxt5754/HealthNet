@@ -1,0 +1,114 @@
+{% extends parent %}
+{% load userGroup %}
+
+
+{% block title %}Patient Profile{% endblock %}
+
+{% block pageContents %}
+
+<div class="row">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-10">
+            <h4>
+               User : {{ request.user.get_full_name}}
+            </h4>
+
+            <h4>
+                Email : {{ request.user.email }}
+            </h4>
+
+            {% if request.user|in_group:"Patient" %}
+
+                <h4>
+                    Birthday : {{ request.user.patient.birthday }}
+                </h4>
+                <h4>
+                    Gender : {{ request.user.patient.get_sex_display }}
+                </h4>
+                <h4>
+                    Blood Type : {{ request.user.patient.get_blood_type_display }}
+                </h4>
+                <h4>
+                    Height : {{ request.user.patient.height }}
+                </h4>
+                <h4>
+                    Weight : {{ request.user.patient.weight }}
+                </h4>
+                <h4>
+                    Allergies : {{ request.user.patient.allergies }}
+                </h4>
+                <h4>
+                    Medical History : {{ request.user.patient.medical_history }}
+                </h4>
+                <h4>
+                    Insurance Info : {{ request.user.patient.insurance_info }}
+                </h4>
+                <h4>
+                    Emergency Contact : {{ request.user.patient.emergency_contact }}
+                </h4>
+                <h4>
+                    Preferred Hospital : {{ request.user.patient.preferred_hospital }}
+                </h4>
+                <h4>
+                    Hospital : {{ request.user.patient.hospital }}
+                </h4>
+
+                <div class="text-center">
+                    <a href="{% url 'update' %}" class="btn btn-info" role="button">Edit Profile</a>
+                    <a href="javascript:privacywarning();" class="btn btn-info" role="button">Email myself this info</a>
+                    <a href="{% url 'download' %}" class="btn btn-info" role="button">Download this info</a>
+                </div>
+            {% elif request.user|in_group:"Nurse" %}
+
+                <h4>
+                    Hospital : {{ request.user.nurse.hospital }}
+                </h4>
+                <h4>
+                    Phone Number : {{ request.user.nurse.phoneNum }}
+                </h4>
+
+                <div class="text-center">
+                    <a href="{% url 'update' %}" class="btn btn-info" role="button">Edit Profile</a>
+                </div>
+            {% elif request.user|in_group:"Doctor" %}
+                <h4>
+                    Phone Number : {{ request.user.doctor.phoneNum }}
+                </h4>
+                <h4>
+                    Hospital : {{ request.user.doctor.hospital }}
+                </h4>
+
+                <div class="text-center">
+                    <a href="{% url 'update' %}" class="btn btn-info" role="button">Edit Profile</a>
+                </div>
+
+            {% elif request.user|in_group:"Admin" %}
+
+                <div class="text-center">
+                    <a href="{% url 'update' %}" class="btn btn-info" role="button">Edit Profile</a>
+                </div>
+
+            {% else %}
+
+                <h2 style="color: #921e12">
+                    No User found. <!--Added by Jim on 4/4/17 for testing-->
+                </h2>
+
+            {% endif %}
+
+        </div>
+        <div class="col-md-1">
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        function privacywarning() {
+            var answer = confirm ("This sends your Medical Information to you in plain text. If someone else intercepts"
+                + " this, they could view your sensitive information. Proceed?");
+            if (answer)
+                window.location="{% url 'email_info' %}";
+            }
+    </script>
+
+{% endblock %}

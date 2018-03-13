@@ -1,0 +1,22 @@
+{% extends "core/landing/baselanding.html" %}
+
+{% block title %}Edit Medical Info{% endblock title %}
+
+{% block pageContents %}
+    <div class="row text-center">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-10">
+            <form enctype="multipart/form-data" action="" method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Save" />
+            </form>
+            <form action="{% url 'upload patient' %}">
+                <input type="submit" value="Upload Patient Info File" />
+            </form>
+        </div>
+        <div class="col-md-1">
+        </div>
+    </div>
+{% endblock %}
