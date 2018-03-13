@@ -15,21 +15,19 @@ for setup.
 - Run the batch file by doing the following for your OS:
 
 Windows: run 
-
 	>	rebuilddatabase.bat
-
-	from windows command line
+from windows command line
 
 
 	
 macOS/Linux: run
 
 	>	bash rebuilddatabase.command
+from Terminal
 
-	from Terminal
-	(on masOS/Linux only: use the flag ‘-r’ to immediately start the server after the 	database is reset: 
+On masOS/Linux only: use the flag ‘-r’ to immediately start the server after the database is reset: 
+
 	>	bash rebuilddatabase.command -r
-	)
 	
 - Run the command "python manage.py runserver"
 - Using a browser of your choosing, go to the URL "localhost:8000"
@@ -74,8 +72,7 @@ Populate Database:
 Windows: run
 
         >       rebuilddatabase.bat
-
-        from windows command line
+from windows command line
 
 
 
@@ -83,7 +80,6 @@ macOS/Linux: run
 
         >       bash rebuilddatabase.command
 
-        from Terminal
-        (on masOS/Linux only: use the flag ‘-r’ to immediately start the server after the       database is reset:
-        >       bash rebuilddatabase.command -r
-        )
+On masOS/Linux only: use the flag ‘-r’ to immediately start the server after the database is reset: 
+	>	bash rebuilddatabase.command -r
+	
