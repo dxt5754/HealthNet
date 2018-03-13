@@ -15,6 +15,7 @@ for setup.
 - Run the batch file by doing the following for your OS:
 
 Windows: run 
+
 	>	rebuilddatabase.bat
 from windows command line
 
