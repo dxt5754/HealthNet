@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block main %}
+<h1>{{ date|date:"F Y" }}{% trans " Week View" %}</h1>
+{% include "calendarium/partials/category_list.html" %}
+<form action="." method="post">
+    {% csrf_token %}
+    <input type="submit" name="previous" value="{% trans "Previous" %}" />
+    <input type="submit" name="next" value="{% trans "Next" %}" />
+    <input type="submit" name="today" value="{% trans "Today" %}" />
+</form>
+<table class="table" id="calendar-week">
+    <tr>
+        {% for date, occurrences, current in week %}
+            <th>{{ date|date:'D m/d' }}</th>
+        {% endfor %}
+    </tr>
+    <tr>
+        {% for date, occurrences, current in week %}
+            <td class="{% if current %}calendarium-current{% endif %}">
+                <div class="calendarium-relative">
+                    {% for occurrence in occurrences %}
+                        <p style="background-color: #{{ occurrence.event.category.color }}; text-align:center;">
+                            <a title="{{ occurrence }}"  style="font-size:100%;"
+                               href="{% url "calendar_occurrence_detail" pk=occurrence.event.pk year=occurrence.start.year month=occurrence.start.month day=occurrence.start.day %}">
+                                {{ occurrence|truncatechars:22 }}</a>
+                        </p>
+                    {% endfor %}
+                </div>
+            </td>
+        {% endfor %}
+    </tr>
+</table>
+{% endblock %}
